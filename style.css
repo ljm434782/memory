@@ -1,0 +1,107 @@
+/* 大的容器包含左侧和右侧 */
+.container {
+    display: flex;
+    height: 100vh;
+  }
+  
+  /* 左侧分为侧边栏和备忘录列表 */
+  .sidebar {
+    flex-basis: 10%;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    background-color: #1bc3d9;
+    color: #fff;
+  }
+  
+  /* 左侧上半部分为添加新页面的按钮 */
+  .new {
+    margin-bottom: 20px;
+  }
+  
+  /* 按钮样式 */
+  button {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: rgb(0, 255, 21);
+    color: #0c0c0c;
+    cursor: pointer;
+  }
+  
+  /* 改变鼠标悬停时按钮的背景颜色 */
+  button:hover {
+    background-color: #f90;
+  }
+  
+  /* 左侧下半部分是备忘录列表 */
+  .memoList {
+    flex-grow: 1;
+  }
+  
+  /* 备忘录标题的样式 */
+  .memoTitle {
+    margin-bottom: 10px;
+    padding: 5px;
+    border: 1px solid #fff;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  /* 鼠标悬停备忘录标题时的样式 */
+  .memoTitle:hover {
+    background-color: #197ced;
+  }
+  
+  /* 右侧主体，用于添加、编辑和显示备忘录 */
+  .main {
+    display: flex;
+    flex-grow: 1;
+    padding: 20px;
+    background-color: #fff;
+  }
+  
+  /* 备忘录的样式 */
+  .memo {
+    flex-grow: 1;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 20px;
+  }
+  
+  /* 备忘录标题的样式 */
+  .memoView input[type=text] {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  /* 备忘录内容区域的样式 */
+  .memoView textarea {
+    width: 100%;
+    height: 300px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    resize: none;
+    font-size: 16px;
+  }
+  
+  /* 备忘录操作按钮的样式 */
+  .memoButtons button {
+    margin-right: 10px;
+    font-size: 16px;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #f60;
+    color: #fff;
+    cursor: pointer;
+  }
+  
+  /* 鼠标悬停时备忘录操作按钮的样式 */
+  .memoButtons button:hover {
+    background-color: #f90;
+  }

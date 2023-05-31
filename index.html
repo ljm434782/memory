@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Memo Pad</title>
+  <link rel="stylesheet" href="style.css" >
+</head>
+<body>
+  <div class="container">
+    <div class="sidebar">
+      <div class="new">
+        <button id="newMemo">新建</button>
+      </div>
+      <div class="memoList" >
+        <!-- 用于显示已有备忘录标题 -->
+      </div>
+      
+    </div>
+    <div class="main">
+     
+      <div class="memo">
+        <!-- 用于添加和编辑备忘录 -->
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // 用于在本地存储中保存备忘录
+    function saveMemo(title, content) {
+      localStorage.setItem(title, content);
+    }
+
+    // 用于从本地存储中获取备忘录
+    function loadMemo(title) {
+      return localStorage.getItem(title);
+    }
+
+    // 用于从本地存储中删除备忘录
+    function removeMemo(title) {
+      localStorage.removeItem(title);
+    }
+  
+    // 获取DOM元素
+    const newMemoBtn = document.getElementById('newMemo');
+    const memoList = document.querySelector('.memoList');
+    const memo = document.querySelector('.memo');
+
+    // 为新建按钮添加点击事件监听器
+    newMemoBtn.addEventListener('click', () => {
+      // 根据用户点击新建按钮，显示内容
+      memo.innerHTML = `
+        <div class="memoView" >
+          <input type="text" id="memoTitle" placeholder="标题">
+          <textarea id="memoContent" placeholder="内容"></textarea>
+          <div class="memoButtons">
+            <button id="saveMemo">保存</button>
+            <button id="discardMemo">清空</button>
+          </div>
+        </div>
+      `;
+
+      // 获取DOM元素
+      const memoTitle = document.getElementById('memoTitle');
+      const memoContent = document.getElementById('memoContent');
+      const saveMemoBtn = document.getElementById('saveMemo');
+      const discardMemoBtn = document.getElementById('discardMemo');
+
+      // 为保存备忘录的按钮添加点击事件监听器
+      saveMemoBtn.addEventListener('click', () => {
+        const title = memoTitle.value;
+        const content = memoContent.value;
+        // 将备忘录保存在本地存储中
+        saveMemo(title, content);
+        // 清空备忘录内容
+        memoTitle.value = "";
+        memoContent.value = "";
+        // 更新备忘录列表
+        updateMemoList();
+      });
+
+      // 为取消保存备忘录的按钮添加点击事件监听器
+      discardMemoBtn.addEventListener('click', () => {
+        // 清空备忘录内容
+        memoTitle.value = "";
+        memoContent.value = "";
+      });
+    });
+
+    // 更新备忘录列表
+    function updateMemoList() {
+      memoList.innerHTML = "";
+      // 获取本地存储中全部的键（即备忘录标题）
+      const keys = Object.keys(localStorage);
+      // 为每一个键（标题）添加一个元素并显示在备忘录列表上
+      for (const key of keys) {
+        const memoTitle = document.createElement('div');
+        memoTitle.classList.add('memoTitle');
+        memoTitle.textContent = key;
+        memoTitle.addEventListener('click', () => {
+          // 显示备忘录详情（标题和内容）
+          memo.innerHTML = `
+            <div class="memoView">
+              <input type="text" id="memoTitle" value="${key}">
+              <textarea id="memoContent">${loadMemo(key)}</textarea>
+              <div class="memoButtons">
+                <button id="updateMemo">Update</button>
+                <button id="removeMemo">Remove</button>
+              </div>
+            </div>
+          `;
+
+          // 获取DOM元素
+          const memoTitleInput = document.getElementById('memoTitle');
+          const memoContent = document.getElementById('memoContent');
+          const updateMemoBtn = document.getElementById('updateMemo');
+          const removeMemoBtn = document.getElementById('removeMemo');
+
+          // 为更新备忘录的按钮添加点击事件监听器
+          updateMemoBtn.addEventListener('click', () => {
+            const title = memoTitleInput.value;
+            const content = memoContent.value;
+            // 将备忘录保存在本地存储中
+            saveMemo(title, content);
+            // 更新
+            updateMemoList(); });
+                  // 为删除备忘录的按钮添加点击事件监听器
+      removeMemoBtn.addEventListener('click', () => {
+        // 从本地存储中删除该备忘录
+        removeMemo(key);
+        // 清空备忘录详情
+        memo.innerHTML = "";
+        // 更新备忘录列表
+        updateMemoList();
+      });
+    });
+    memoList.appendChild(memoTitle);
+  }
+}
+
+// 初始化备忘录列表
+updateMemoList();
+</script>
+</body>
+</html>
